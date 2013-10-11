@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<config>
+    <RallyConnection>
+        <Url>rally1.rallydev.com</Url>
+        <WorkspaceName>Rally Workspace Name</WorkspaceName>
+        <Projects>
+            <Project>Rally Project</Project>
+        </Projects>
+        <User>user@company.com</User>
+        <Password>your_rally_password</Password>
+        <ArtifactType>Defect</ArtifactType>
+        <ExternalIDField>JiraKey</ExternalIDField>
+        <CrosslinkUrlField>JiraLink</CrosslinkUrlField>
+        <CopySelectors>
+            <CopySelector>State != Closed</CopySelector>
+        </CopySelectors>
+        <UpdateSelectors>
+           <UpdateSelector>Project.Name = "Rally Project"</UpdateSelector>
+        </UpdateSelectors>
+        <FieldDefaults>
+            <Field><Name>Severity</Name><Default>Low</Default></Field>
+        </FieldDefaults>
+    </RallyConnection>
+
+    <JiraRestConnection>
+        <Url>http://jiraserver:8080</Url>
+        <User>jirauser</User>
+        <Password>your_jira_password</Password>
+        <!-- If the jira server is behind a proxy, set the ProxyURL and if needed the ProxyUser and ProxyPassword -->
+        <!--
+        <ProxyURL>http://your.proxy.com</ProxyURL>
+        <ProxyUser>proxy_user</ProxyUser>
+        <ProxyPassword>proxy_password</ProxyPassword>
+        -->
+        <ArtifactType>Bug</ArtifactType>
+        <Project>JIRA PROJECT KEY</Project>
+        <ExternalIDField>RallyID</ExternalIDField>
+        <CrosslinkUrlField>RallyURL</CrosslinkUrlField>
+
+        <!-- Enable the WorkflowFile tag, referencing your work flow file, if you have setup a custom jira work flow -->
+        <!-- <WorkflowFile>my_workflow.xml</WorkflowFile> -->
+
+        <CopySelectors>
+            <CopySelector>Status != Closed</CopySelector>
+        </CopySelectors>
+        <UpdateSelectors>
+            <UpdateSelector>Status != Closed</UpdateSelector>
+        </UpdateSelectors>
+        <FieldDefaults>
+            <Field><Name>Severity</Name><Default>Low</Default></Field>
+        </FieldDefaults>
+    </JiraRestConnection>
+
+    <Connector>
+        <FieldMapping>
+            <Field><Rally>Name</Rally>         <Other>Summary</Other></Field>
+            <Field><Rally>Description</Rally>  <Other>Description</Other></Field>
+            <Field><Rally>State</Rally>        <Other>Status</Other></Field>
+            <Field><Rally>Resolution</Rally>   <Other>Resolution</Other></Field>
+            <Field><Rally>FoundInBuild</Rally> <Other>Affects Version/s</Other></Field>
+        </FieldMapping>
+
+        <OtherFieldHandlers>
+            <!-- Enable the JiraNewlineFieldHandler if want Rally Description break tags to be translated to newline characters. -->
+            <!-- You may not use multiple FieldHandlers for the same JIRA field though -->
+            <!--
+            <JiraNewlineFieldHandler>
+                <FieldName>Description</FieldName>
+            </JiraNewlineFieldHandler>
+            -->
+
+            <OtherEnumFieldHandler>
+                <FieldName>Status</FieldName>
+                <Mappings>
+                    <Field><Rally>Submitted</Rally> <Other>Open</Other></Field>
+                    <Field><Rally>Open</Rally>      <Other>In Progress</Other></Field>
+                    <Field><Rally>Reopened</Rally>  <Other>Reopened</Other></Field>
+                    <Field><Rally>Fixed</Rally>     <Other>Resolved</Other></Field>
+                    <Field><Rally>Closed</Rally>    <Other>Closed</Other></Field>
+                </Mappings>
+            </OtherEnumFieldHandler>
+        </OtherFieldHandlers>
+
+        <RelatedObjectLinkers>
+            <RallyAttachmentLinker/>
+            <RallyJiraCommentLinker/>
+        </RelatedObjectLinkers>
+    </Connector>
+
+    <ConnectorRunner>
+        <Preview>False</Preview>
+        <LogLevel>INFO</LogLevel>
+
+        <!-- Add the COPY_RALLY_TO_JIRA if you want to enable bi-directional copying -->
+        <Services>COPY_JIRA_TO_RALLY,UPDATE_RALLYFIELDS_AND_OTHER</Services>
+
+        <!-- For the Email feature the following fields are available
+             The required fields are: 
+                 - Level             Warning or Error 
+                 - SendEmailFrom     An email address
+                 - SendEmailTo       An email address
+                 - SMTPServer        Fully qualified domain name or IP address
+                 - SMTPPort          Default SMTP port is 25, Default TLS SMTP Port is 587
+             The optional fields are:
+                 - SMTPUser          A valid user on the SMTP server
+                 - SMTPPassword      The password for this user
+                 - SMTPSec           tls or ssl
+        -->
+        <!--
+        <Emailer> 
+            <Level>Warning</Level>                                    
+            <SendEmailFrom>conn_user@your_company.com</SendEmailFrom> 
+            <SendEmailTo>reviewer@your_company.com</SendEmailTo>      
+            <SMTPServer>company_smtp_server</SMTPServer>             
+            <SMTPPort>587</SMTPPort>                                  
+            <SMTPUser>auth_user</SMTPUser>                            
+            <SMTPPassword>auth_password</SMTPPassword>               
+            <SMTPSec>tls</SMTPSec>                                   
+        </Emailer>
+        -->
+    </ConnectorRunner>
+</config>
