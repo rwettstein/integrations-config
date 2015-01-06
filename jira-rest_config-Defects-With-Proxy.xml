@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <config>
     <RallyConnection>
-        <!-- <Url>10.32.16.122</Url> -->
-        <Url>trial.rallydev.com</Url>
+        <!-- <Url>ip</Url> -->
+        <Url>url</Url>
         <WorkspaceName>Roland Jira Proxy Workspace</WorkspaceName>
         <Projects>
             <Project>Jira Proxy Project</Project>
         </Projects>
-        <User>roland_trial@rallydev.com</User>
-        <Password>encoded-M-U-h-l-c-n-J-l-b-j-J-i-Z-X-J-n-</Password>
+        <User>roland_trial@host.com</User>
+        <Password>password</Password>
         <ArtifactType>Defect</ArtifactType>
         <ExternalIDField>JiraKey</ExternalIDField>
         <CrosslinkUrlField>JiraLink</CrosslinkUrlField>
@@ -34,9 +34,9 @@
     </RallyConnection>
 
     <JiraRestConnection>
-	<Url>https://rally1.atlassian.net</Url>
+	<Url>https://host</Url>
         <User>ghuser</User>
-        <Password>encoded-Z-2-h-1-c-2-V-y-</Password>
+        <Password>passwd</Password>
         <ArtifactType>Bug</ArtifactType>
         <Project>YETI</Project>
         <ExternalIDField>RallyID</ExternalIDField>
@@ -51,8 +51,8 @@
         <ProxyURL>i</ProxyURL>
 
         <ProxyUser>connector</ProxyUser>
-        <!-- <ProxyPassword>encoded-c-m-F-s-b-H-l-k-Z-X-Y-=-</ProxyPassword> -->
-        <ProxyPassword>encoded-c-m-F-s-b-H-l-k-Z-X-Y-=-</ProxyPassword>
+        <!-- <ProxyPassword>passwd</ProxyPassword> -->
+        <ProxyPassword>passwd</ProxyPassword>
 
         <!-- Enable the WorkflowFile tag, referencing your work flow file, if you have setup a custom jira work flow -->
         <!-- <WorkflowFile>my_workflow.xml</WorkflowFile> -->
@@ -183,11 +183,11 @@
         -->
         <Emailer>
             <LogLevel>Warning</LogLevel>
-            <!-- <SendEmailFrom>rallyintegrations@gmail.com</SendEmailFrom> -->
-            <SendEmailFrom>rwettstein@rallydev.com</SendEmailFrom>
-            <SendEmailTo>swisstech08@gmail.com</SendEmailTo>
+            <!-- <SendEmailFrom>host</SendEmailFrom> -->
+            <SendEmailFrom>mail</SendEmailFrom>
+            <SendEmailTo>user</SendEmailTo>
             <!-- <SMTPServer>smtp.gmail.com</SMTPServer> -->
-            <SMTPServer>10.32.0.157</SMTPServer>
+            <SMTPServer>ip</SMTPServer>
             <!-- <SMTPPort>587</SMTPPort> -->
             <SMTPPort>25</SMTPPort>
             <!-- <SMTPUser>rallyintegrations@gmail.com</SMTPUser> -->
